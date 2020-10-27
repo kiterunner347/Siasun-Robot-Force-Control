@@ -1,0 +1,35 @@
+%implements s8_b0_7qhbl_Derivatives "C"
+
+%function Derivatives(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+XDot *_rtXdot;
+%closefile localVarDecl
+_rtXdot = %<(SLibCG_SE(SLibGetContStatesDerivativeStructPtr()))>;
+_rtXdot->ltcgoujjg5[0] = rtX.ltcgoujjg5[1];
+_rtXdot->ltcgoujjg5[1] = ((rtB.hhqhzgyozp[0] - rtX.ltcgoujjg5[0]) * 1000.0 - 2.0 * rtX.ltcgoujjg5[1]) * 1000.0;
+_rtXdot->bmfb3l4m3w[0] = rtX.bmfb3l4m3w[1];
+_rtXdot->bmfb3l4m3w[1] = ((rtB.hhqhzgyozp[1] - rtX.bmfb3l4m3w[0]) * 1000.0 - 2.0 * rtX.bmfb3l4m3w[1]) * 1000.0;
+_rtXdot->owiv35ezkz[0] = rtX.owiv35ezkz[1];
+_rtXdot->owiv35ezkz[1] = ((rtB.hhqhzgyozp[2] - rtX.owiv35ezkz[0]) * 1000.0 - 2.0 * rtX.owiv35ezkz[1]) * 1000.0;
+_rtXdot->mb2o5lxpfn[0] = rtX.mb2o5lxpfn[1];
+_rtXdot->mb2o5lxpfn[1] = ((rtB.hhqhzgyozp[3] - rtX.mb2o5lxpfn[0]) * 1000.0 - 2.0 * rtX.mb2o5lxpfn[1]) * 1000.0;
+_rtXdot->iq5dwdostq[0] = rtX.iq5dwdostq[1];
+_rtXdot->iq5dwdostq[1] = ((rtB.hhqhzgyozp[4] - rtX.iq5dwdostq[0]) * 1000.0 - 2.0 * rtX.iq5dwdostq[1]) * 1000.0;
+_rtXdot->mzvb2jly5n[0] = rtX.mzvb2jly5n[1];
+_rtXdot->mzvb2jly5n[1] = ((rtB.hhqhzgyozp[5] - rtX.mzvb2jly5n[0]) * 1000.0 - 2.0 * rtX.mzvb2jly5n[1]) * 1000.0;
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedDerivativeLocalVars", localVarDecl)>
+%endfunction
+%function DerivativesFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Derivatives(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 10, fcnProtoType)>
+%endfunction

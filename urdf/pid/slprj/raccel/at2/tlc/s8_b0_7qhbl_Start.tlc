@@ -1,0 +1,121 @@
+%implements s8_b0_7qhbl_Start "C"
+
+%function Start(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+NeslSimulator *tmp;
+boolean_T tmp_p;
+NeslSimulationData *tmp_e;
+NeuDiagnosticManager *diagnosticManager;
+NeModelParameters modelParameters;
+real_T tmp_i;
+NeuDiagnosticTree *diagnosticTree;
+int32_T tmp_m;
+char *msg;
+NeModelParameters modelParameters_p;
+%closefile localVarDecl
+%assign tlcSetupRuntimeResourcesFcnOfS7B82 = OpaqueTLCBlockFcn("SetupRuntimeResources", 7, 82, 1, 5, 0)
+%assign tlcStartFcnOfS7B0 = OpaqueTLCBlockFcn("Start", 7, 0, 1, 5, 1)
+%<tlcSetupRuntimeResourcesFcnOfS7B82>\
+%<tlcStartFcnOfS7B0>\
+tmp = nesl_lease_simulator("at2/Pos_control/Robot System/Solver Configuration_1", 1, 0);
+rtDW.hqsynxemjz = (void *)tmp;
+tmp_p = pointer_is_null(rtDW.hqsynxemjz);
+if (tmp_p) {
+    at2_1a62e0cc_1_gateway();
+    tmp = nesl_lease_simulator("at2/Pos_control/Robot System/Solver Configuration_1", 1, 0);
+    rtDW.hqsynxemjz = (void *)tmp;
+}
+tmp_e = nesl_create_simulation_data();
+rtDW.nh4dixfxxv = (void *)tmp_e;
+diagnosticManager = rtw_create_diagnostics();
+rtDW.njkgf0ca1x = (void *)diagnosticManager;
+modelParameters.mSolverType = NE_SOLVER_TYPE_DAE;
+modelParameters.mSolverTolerance = 0.001;
+modelParameters.mVariableStepSolver = true;
+modelParameters.mIsUsingODEN = false;
+modelParameters.mFixedStepSize = 0.001;
+modelParameters.mStartTime = 0.0;
+modelParameters.mLoadInitialState = false;
+modelParameters.mUseSimState = false;
+modelParameters.mLinTrimCompile = false;
+modelParameters.mLoggingMode = SSC_LOGGING_NONE;
+modelParameters.mRTWModifiedTimeStamp = 5.1826971E+8;
+tmp_i = %<(SLibCG_SE(SLibCGIRGetVarStepSolverPropertyValue("RelTol", "0.001")))>;
+modelParameters.mSolverTolerance = tmp_i;
+tmp_i = %<(SLibCG_SE(SLibCGIRGetFixStepSolverPropertyValue("FixedStep", "0.0")))>;
+modelParameters.mFixedStepSize = tmp_i;
+tmp_p = %<(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("SolverType", "VariableStep")))>;
+modelParameters.mVariableStepSolver = tmp_p;
+tmp_p = %<(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("Solver", "odeN")))>;
+modelParameters.mIsUsingODEN = tmp_p;
+tmp_p = %<(SLibCG_SE(RTMGetGlobalInitialStatesAvailable()))>;
+modelParameters.mLoadInitialState = (tmp_p && %<(SLibCG_SE(LibIsFirstInitCond()))>);
+diagnosticManager = (NeuDiagnosticManager *)rtDW.njkgf0ca1x;
+diagnosticTree = neu_diagnostic_manager_get_initial_tree(diagnosticManager);
+tmp_m = nesl_initialize_simulator((NeslSimulator *)rtDW.hqsynxemjz, &modelParameters, diagnosticManager);
+if (tmp_m != 0) {
+    tmp_p = error_buffer_is_empty(%<(LibGetRTModelErrorStatus())>);
+    if (tmp_p) {
+        msg = rtw_diagnostics_msg(diagnosticTree);
+        %<(LibSetRTModelErrorStatus("msg"))>;
+    }
+}
+tmp = nesl_lease_simulator("at2/Pos_control/Robot System/Solver Configuration_1", 0, 0);
+rtDW.auqz2qbi5i = (void *)tmp;
+tmp_p = pointer_is_null(rtDW.auqz2qbi5i);
+if (tmp_p) {
+    at2_1a62e0cc_1_gateway();
+    tmp = nesl_lease_simulator("at2/Pos_control/Robot System/Solver Configuration_1", 0, 0);
+    rtDW.auqz2qbi5i = (void *)tmp;
+}
+tmp_e = nesl_create_simulation_data();
+rtDW.jatmhhkalj = (void *)tmp_e;
+diagnosticManager = rtw_create_diagnostics();
+rtDW.a2ipnclkkw = (void *)diagnosticManager;
+modelParameters_p.mSolverType = NE_SOLVER_TYPE_DAE;
+modelParameters_p.mSolverTolerance = 0.001;
+modelParameters_p.mVariableStepSolver = true;
+modelParameters_p.mIsUsingODEN = false;
+modelParameters_p.mFixedStepSize = 0.001;
+modelParameters_p.mStartTime = 0.0;
+modelParameters_p.mLoadInitialState = false;
+modelParameters_p.mUseSimState = false;
+modelParameters_p.mLinTrimCompile = false;
+modelParameters_p.mLoggingMode = SSC_LOGGING_NONE;
+modelParameters_p.mRTWModifiedTimeStamp = 5.1826971E+8;
+tmp_i = %<(SLibCG_SE(SLibCGIRGetVarStepSolverPropertyValue("RelTol", "0.001")))>;
+modelParameters_p.mSolverTolerance = tmp_i;
+tmp_i = %<(SLibCG_SE(SLibCGIRGetFixStepSolverPropertyValue("FixedStep", "0.0")))>;
+modelParameters_p.mFixedStepSize = tmp_i;
+tmp_p = %<(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("SolverType", "VariableStep")))>;
+modelParameters_p.mVariableStepSolver = tmp_p;
+tmp_p = %<(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("Solver", "odeN")))>;
+modelParameters_p.mIsUsingODEN = tmp_p;
+tmp_p = %<(SLibCG_SE(RTMGetGlobalInitialStatesAvailable()))>;
+modelParameters_p.mLoadInitialState = (tmp_p && %<(SLibCG_SE(LibIsFirstInitCond()))>);
+diagnosticManager = (NeuDiagnosticManager *)rtDW.a2ipnclkkw;
+diagnosticTree = neu_diagnostic_manager_get_initial_tree(diagnosticManager);
+tmp_m = nesl_initialize_simulator((NeslSimulator *)rtDW.auqz2qbi5i, &modelParameters_p, diagnosticManager);
+if (tmp_m != 0) {
+    tmp_p = error_buffer_is_empty(%<(LibGetRTModelErrorStatus())>);
+    if (tmp_p) {
+        msg = rtw_diagnostics_msg(diagnosticTree);
+        %<(LibSetRTModelErrorStatus("msg"))>;
+    }
+}
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedStartLocalVars", localVarDecl)>
+%endfunction
+%function StartFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Start(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 5, fcnProtoType)>
+%endfunction

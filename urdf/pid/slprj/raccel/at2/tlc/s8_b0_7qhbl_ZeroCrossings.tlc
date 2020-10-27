@@ -1,0 +1,19 @@
+%implements s8_b0_7qhbl_ZeroCrossings "C"
+
+%function ZeroCrossings(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%assign tlcZeroCrossingsFcnOfS7B0 = OpaqueTLCBlockFcn("ZeroCrossings", 7, 0, 1, 12, 0)
+%<tlcZeroCrossingsFcnOfS7B0>\
+%closefile cfgTxt
+%<cfgTxt>
+%endfunction
+%function ZeroCrossingsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void ZeroCrossings(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 12, fcnProtoType)>
+%endfunction

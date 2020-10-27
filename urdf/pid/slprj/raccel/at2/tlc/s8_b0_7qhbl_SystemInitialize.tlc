@@ -1,0 +1,52 @@
+%implements s8_b0_7qhbl_SystemInitialize "C"
+
+%function SystemInitialize(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+uint32_T tseed;
+int32_T r;
+int32_T t;
+int32_T i;
+real_T tmp;
+%closefile localVarDecl
+%<SLibGetRootInportsFromFile(system, TLC_TRUE)>
+%<SLibInsertAsyncTaskInitializeCode(system)>
+%<SLibWriteMachineInitialize()>
+for (i = 0; i < 6; i++) {
+    rtDW.nmy3zwd5kj[i] = rtP.Memory_InitialCondition[i];
+    tmp = muDoubleScalarFloor(rtP.BandLimitedWhiteNoise_seed[i]);
+    if (muDoubleScalarIsNaN(tmp) || muDoubleScalarIsInf(tmp)) {
+        tmp = 0.0;
+    } else {
+        tmp = muDoubleScalarRem(tmp, 4.294967296E+9);
+    }
+    tseed = tmp < 0.0 ? (uint32_T)-(int32_T)(uint32_T)-tmp : (uint32_T)tmp;
+    r = (int32_T)(tseed >> 16U);
+    t = (int32_T)(tseed & 32768U);
+    tseed = ((((tseed - ((uint32_T)r << 16U)) + t) << 16U) + t) + r;
+    if (tseed < 1U) {
+        tseed = 1144108930U;
+    } else {
+        if (tseed > 2147483646U) {
+            tseed = 2147483646U;
+        }
+    }
+    rtDW.mgkpcfn5tp[i] = tseed;
+    rtDW.lo3hyq5jf3[i] = %<(SLibCGCallSubFcn("rt_nrand_Upu32_Yd_f_pw_snf", ["&rtDW.mgkpcfn5tp[i]"], 1, 6, 0))> * rtP.WhiteNoise_StdDev + rtP.WhiteNoise_Mean;
+}
+%<SLibInsertInitPeriodicCStatesFcn(system)>
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedSystemInitializeLocalVars", localVarDecl)>
+%endfunction
+%function SystemInitializeFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void SystemInitialize(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 6, fcnProtoType)>
+%endfunction

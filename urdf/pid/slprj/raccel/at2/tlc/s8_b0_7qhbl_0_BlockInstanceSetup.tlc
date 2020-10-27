@@ -1,0 +1,45 @@
+%implements s8_b0_7qhbl_0_BlockInstanceSetup "C"
+
+%function BlockInstanceSetup(block, system) Output
+%% Subsystems with iterators in IR:
+%% TLC Block Registration buffer:
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("at2_1a62e0cc_1_gateway.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("at2_1a62e0cc_1_gateway.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%<LibAddToCommonIncludes("nesl_rtw.h")>
+%% END  Block Registration buffer
+%endfunction

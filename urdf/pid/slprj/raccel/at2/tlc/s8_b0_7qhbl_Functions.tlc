@@ -1,0 +1,283 @@
+%implements s8_b0_7qhbl_Functions "C"
+
+%function rt_urand_Upu32_Yd_f_pw_snf_Fcn0(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+uint32_T lo;
+uint32_T hi;
+/* Uniform random number generator (random number between 0 and 1)
+
+#define IA      16807                      magic multiplier = 7^5
+#define IM      2147483647                 modulus = 2^31-1
+#define IQ      127773                     IM div IA
+#define IR      2836                       IM modulo IA
+#define S       4.656612875245797e-10      reciprocal of 2^31-1
+test = IA * (seed %<"\% IQ) - IR * (seed/IQ)\
+seed = test < 0 ? (test + IM) : test\
+return (seed*S)\
+"> */
+lo = *u % 127773U * 16807U;
+hi = *u / 127773U * 2836U;
+if (lo < hi) {
+    *u = 2147483647U - (hi - lo);
+} else {
+    *u = lo - hi;
+}
+return (real_T)*u * 4.6566128752457969E-10;
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern real_T rt_urand_Upu32_Yd_f_pw_snf(\
+%assign comma = ""
+%<comma>uint32_T *u\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 0, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function rt_nrand_Upu32_Yd_f_pw_snf_Fcn1(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+real_T y;
+real_T sr;
+real_T si;
+%assign _modelSS = ""
+
+%if SLibCG_FcnCallArgAccessed(1,1,1,0)
+%<SLibCG_AccessArg(1 ,1, 0)>
+%endif
+
+%if SLibCG_FcnCallArgAccessed(1,1,0,0)
+%<SLibCG_AccessArg(1 ,1, 0)>
+%endif
+
+/* Normal (Gaussian) random number generator */
+do {
+    sr = 2.0 * %<(SLibCGCallSubFcn("rt_urand_Upu32_Yd_f_pw_snf", ["u"], 1, 1, 0))> - 1.0;
+    si = 2.0 * %<(SLibCGCallSubFcn("rt_urand_Upu32_Yd_f_pw_snf", ["u"], 1, 1, 1))> - 1.0;
+    si = sr * sr + si * si;
+} while (si > 1.0);
+y = muDoubleScalarSqrt(-2.0 * muDoubleScalarLog(si) / si) * sr;
+return y;
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern real_T rt_nrand_Upu32_Yd_f_pw_snf(\
+%assign comma = ""
+%<comma>uint32_T *u\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 1, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function my3vigam3c_Fcn2(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+real_T y;
+real_T scale;
+real_T absxk;
+real_T t;
+scale = 3.3121686421112381E-170;
+absxk = muDoubleScalarAbs(x[0]);
+if (absxk > 3.3121686421112381E-170) {
+    y = 1.0;
+    scale = absxk;
+} else {
+    t = absxk / 3.3121686421112381E-170;
+    y = t * t;
+}
+absxk = muDoubleScalarAbs(x[1]);
+if (absxk > scale) {
+    t = scale / absxk;
+    y = y * t * t + 1.0;
+    scale = absxk;
+} else {
+    t = absxk / scale;
+    y += t * t;
+}
+absxk = muDoubleScalarAbs(x[2]);
+if (absxk > scale) {
+    t = scale / absxk;
+    y = y * t * t + 1.0;
+    scale = absxk;
+} else {
+    t = absxk / scale;
+    y += t * t;
+}
+return scale * muDoubleScalarSqrt(y);
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static real_T my3vigam3c(\
+%assign comma = ""
+%<comma>const real_T x[3]\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 2, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function my3vigam3cl_Fcn3(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+real_T y;
+real_T scale;
+real_T absxk;
+real_T t;
+scale = 3.3121686421112381E-170;
+absxk = muDoubleScalarAbs(x[0]);
+if (absxk > 3.3121686421112381E-170) {
+    y = 1.0;
+    scale = absxk;
+} else {
+    t = absxk / 3.3121686421112381E-170;
+    y = t * t;
+}
+absxk = muDoubleScalarAbs(x[1]);
+if (absxk > scale) {
+    t = scale / absxk;
+    y = y * t * t + 1.0;
+    scale = absxk;
+} else {
+    t = absxk / scale;
+    y += t * t;
+}
+return scale * muDoubleScalarSqrt(y);
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static real_T my3vigam3cl(\
+%assign comma = ""
+%<comma>const real_T x[2]\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 3, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function mrkmcide1ii_Fcn4(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+real_T b_A[36];
+int8_T ipiv[6];
+int32_T j;
+int32_T kAcol;
+int32_T ix;
+real_T smax;
+int32_T b_k;
+int32_T iy;
+real_T y;
+int32_T c_ix;
+int32_T d;
+int32_T ijA;
+memcpy(&b_A[0], &A[0], 36U * sizeof(real_T));
+for (j = 0; j < 6; j++) {
+    ipiv[j] = (int8_T)(j + 1);
+}
+for (j = 0; j < 5; j++) {
+    kAcol = j * 7;
+    iy = 0;
+    ix = kAcol;
+    smax = muDoubleScalarAbs(b_A[kAcol]);
+    for (b_k = 2; b_k <= 6 - j; b_k++) {
+        ix++;
+        y = muDoubleScalarAbs(b_A[ix]);
+        if (y > smax) {
+            iy = b_k - 1;
+            smax = y;
+        }
+    }
+    if (b_A[kAcol + iy] != 0.0) {
+        if (iy != 0) {
+            ipiv[j] = (int8_T)((j + iy) + 1);
+            ix = j;
+            iy += j;
+            for (b_k = 0; b_k < 6; b_k++) {
+                smax = b_A[ix];
+                b_A[ix] = b_A[iy];
+                b_A[iy] = smax;
+                ix += 6;
+                iy += 6;
+            }
+        }
+        iy = (kAcol - j) + 6;
+        for (ix = kAcol + 1; ix < iy; ix++) {
+            b_A[ix] /= b_A[kAcol];
+        }
+    }
+    iy = kAcol;
+    ix = kAcol + 6;
+    for (b_k = 0; b_k <= 4 - j; b_k++) {
+        if (b_A[ix] != 0.0) {
+            smax = -b_A[ix];
+            c_ix = kAcol + 1;
+            d = (iy - j) + 12;
+            for (ijA = iy + 7; ijA < d; ijA++) {
+                b_A[ijA] += b_A[c_ix] * smax;
+                c_ix++;
+            }
+        }
+        ix += 6;
+        iy += 6;
+    }
+}
+for (j = 0; j < 5; j++) {
+    if (j + 1 != ipiv[j]) {
+        smax = B_e[j];
+        B_e[j] = B_e[ipiv[j] - 1];
+        B_e[ipiv[j] - 1] = smax;
+    }
+}
+for (j = 0; j < 6; j++) {
+    kAcol = 6 * j;
+    if (B_e[j] != 0.0) {
+        for (iy = j + 1; iy + 1 < 7; iy++) {
+            B_e[iy] -= b_A[iy + kAcol] * B_e[j];
+        }
+    }
+}
+for (j = 5; j >= 0; j--) {
+    kAcol = 6 * j;
+    if (B_e[j] != 0.0) {
+        B_e[j] /= b_A[j + kAcol];
+        for (iy = 0; iy < j; iy++) {
+            B_e[iy] -= b_A[iy + kAcol] * B_e[j];
+        }
+    }
+}
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void mrkmcide1ii(\
+%assign comma = ""
+%<comma>const real_T A[36]\
+%assign comma = ", "
+%<comma>real_T B_e[6]\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 4, fcnProtoType)>
+%return fcnBuff
+%endfunction
+

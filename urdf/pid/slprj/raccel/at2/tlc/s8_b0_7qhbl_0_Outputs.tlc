@@ -1,0 +1,170 @@
+%implements s8_b0_7qhbl_0_Outputs "C"
+
+%function Outputs(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+real_T A[16];
+int8_T ipiv[4];
+int32_T c;
+int32_T ix;
+real_T smax;
+int32_T iy;
+real_T y;
+int32_T jA;
+int32_T c_ix;
+int32_T d;
+int32_T ijA;
+int32_T i;
+%closefile localVarDecl
+%<SLibGenerateExtModeOutput(system)>
+for (i = 0; i < 16; i++) {
+    A[i] = bsght5ai32[i];
+}
+ipiv[0] = 1;
+ipiv[1] = 2;
+ipiv[2] = 3;
+ipiv[3] = 4;
+for (i = 0; i < 3; i++) {
+    c = i * 5;
+    jA = 0;
+    ix = c;
+    smax = muDoubleScalarAbs(A[c]);
+    for (iy = 2; iy <= 4 - i; iy++) {
+        ix++;
+        y = muDoubleScalarAbs(A[ix]);
+        if (y > smax) {
+            jA = iy - 1;
+            smax = y;
+        }
+    }
+    if (A[c + jA] != 0.0) {
+        if (jA != 0) {
+            ipiv[i] = (int8_T)((i + jA) + 1);
+            iy = i + jA;
+            smax = A[i];
+            A[i] = A[iy];
+            A[iy] = smax;
+            ix = i + 4;
+            iy += 4;
+            smax = A[ix];
+            A[ix] = A[iy];
+            A[iy] = smax;
+            ix += 4;
+            iy += 4;
+            smax = A[ix];
+            A[ix] = A[iy];
+            A[iy] = smax;
+            ix += 4;
+            iy += 4;
+            smax = A[ix];
+            A[ix] = A[iy];
+            A[iy] = smax;
+        }
+        jA = (c - i) + 4;
+        for (ix = c + 1; ix < jA; ix++) {
+            A[ix] /= A[c];
+        }
+    }
+    jA = c;
+    ix = c + 4;
+    for (iy = 0; iy <= 2 - i; iy++) {
+        if (A[ix] != 0.0) {
+            smax = -A[ix];
+            c_ix = c + 1;
+            d = (jA - i) + 8;
+            for (ijA = jA + 5; ijA < d; ijA++) {
+                A[ijA] += A[c_ix] * smax;
+                c_ix++;
+            }
+        }
+        ix += 4;
+        jA += 4;
+    }
+}
+for (i = 0; i < 16; i++) {
+    localB->esrk1finja[i] = ahjegsog45[i];
+}
+for (i = 0; i < 4; i++) {
+    jA = i << 2;
+    ix = i << 2;
+    for (iy = 0; iy < i; iy++) {
+        c_ix = iy << 2;
+        if (A[iy + ix] != 0.0) {
+            localB->esrk1finja[jA] -= A[iy + ix] * localB->esrk1finja[c_ix];
+            localB->esrk1finja[jA + 1] -= A[iy + ix] * localB->esrk1finja[c_ix + 1];
+            localB->esrk1finja[jA + 2] -= A[iy + ix] * localB->esrk1finja[c_ix + 2];
+            localB->esrk1finja[jA + 3] -= A[iy + ix] * localB->esrk1finja[c_ix + 3];
+        }
+    }
+    smax = 1.0 / A[i + ix];
+    localB->esrk1finja[jA] *= smax;
+    localB->esrk1finja[jA + 1] *= smax;
+    localB->esrk1finja[jA + 2] *= smax;
+    localB->esrk1finja[jA + 3] *= smax;
+}
+for (i = 3; i >= 0; i--) {
+    jA = i << 2;
+    ix = (i << 2) - 1;
+    for (iy = i + 2; iy < 5; iy++) {
+        c_ix = (iy - 1) << 2;
+        if (A[iy + ix] != 0.0) {
+            localB->esrk1finja[jA] -= A[iy + ix] * localB->esrk1finja[c_ix];
+            localB->esrk1finja[jA + 1] -= A[iy + ix] * localB->esrk1finja[c_ix + 1];
+            localB->esrk1finja[jA + 2] -= A[iy + ix] * localB->esrk1finja[c_ix + 2];
+            localB->esrk1finja[jA + 3] -= A[iy + ix] * localB->esrk1finja[c_ix + 3];
+        }
+    }
+}
+for (i = 2; i >= 0; i--) {
+    if (i + 1 != ipiv[i]) {
+        jA = ipiv[i] - 1;
+        smax = localB->esrk1finja[i << 2];
+        localB->esrk1finja[i << 2] = localB->esrk1finja[jA << 2];
+        localB->esrk1finja[jA << 2] = smax;
+        smax = localB->esrk1finja[(i << 2) + 1];
+        localB->esrk1finja[(i << 2) + 1] = localB->esrk1finja[(jA << 2) + 1];
+        localB->esrk1finja[(jA << 2) + 1] = smax;
+        smax = localB->esrk1finja[(i << 2) + 2];
+        localB->esrk1finja[(i << 2) + 2] = localB->esrk1finja[(jA << 2) + 2];
+        localB->esrk1finja[(jA << 2) + 2] = smax;
+        smax = localB->esrk1finja[(i << 2) + 3];
+        localB->esrk1finja[(i << 2) + 3] = localB->esrk1finja[(jA << 2) + 3];
+        localB->esrk1finja[(jA << 2) + 3] = smax;
+    }
+}
+%closefile cfgTxt
+%<cfgTxt>
+%assign rtmArgSys = ::CompiledModel.System[::CompiledModel.System[::CompiledModel.RTWCGModules.RTWCGModule[0].CGSystemIdx].NonInlinedParentSystemIdx]
+%if SysFcnArgNeeded("Output", rtmArgSys.Interface.RTMArgDef, rtmArgSys.CurrentTID, FcnSysModuleIsRateGrouping(rtmArgSys, "Output"))
+%<SLibCG_AccessArg(0, 0, 0)>
+%endif
+%if SLibCG_ArgAccessed(0, 0, 0)
+%<SLibAccessArg(rtmArgSys.Interface.RTMArgDef, "Output", rtmArgSys.CurrentTID, FcnSysModuleIsRateGrouping(rtmArgSys, "Output"))>
+%endif
+%if (IsModelReferenceBaseSys(rtmArgSys) && (IsModelRefScalableBuild() || GenerateClassInterface)) ||...
+(GenerateClassInterface && SLibIsMultiInstanceServer(rtmArgSys))
+%<SLibCG_UndoAccessArg(0, 0, 0)>
+%endif
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction
+%function OutputsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void dmwcbcew2l(\
+%assign comma = ""
+%if SLibCG_ArgAccessed(0, 0, 0)
+%<comma>%<::tSimStructType> *rtS_p\
+%assign comma = ", "
+%endif
+%<comma>const real_T bsght5ai32[16]\
+%assign comma = ", "
+%<comma>const real_T ahjegsog45[16]\
+%assign comma = ", "
+%<comma>eor4oa03ol *localB\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 0, fcnProtoType)>
+%endfunction
